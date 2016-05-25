@@ -1,7 +1,9 @@
 (function (database){
     var mongodb = require("mongodb");
     var q = require("q");
-    var mongoUrl = "mongodb://localhost:27017/integrity";
+    var config = require("../config");
+    var mongoUrl = config.mongoConnection;
+    var collections = config.collections;
     var db = null;
 
     database.getDb = function(next){
@@ -13,14 +15,12 @@
                         next(err, null);
                     } else {
                         db = {
-                            db: returnedDb,
-                            hNode: returnedDb.collection("hNode"),
-                            hNodeType: returnedDb.collection("hNodeType"),
-                            viewType: returnedDb.collection("viewType"),
-                            viewJs: returnedDb.collection("viewJs"),
-                            viewHtml: returnedDb.collection("viewHtml"),
-                            userRoot: returnedDb.collection("userRoot")
+                            db: returnedDb
                         };
+                        // Create collections if necessary
+                        collections.forEach(function(collection){
+                            db[collection.name] = returnedDb.collection(collection.name);
+                        });
                         next(null, db);
                     }
                 });
@@ -32,7 +32,7 @@
         }
     };
 
-    database.removeCollection = function(collectionName){
+    database.removeCollection = function(collection){
         var deferred = q.defer();
         try {
             database.getDb(function (err, db) {
@@ -40,10 +40,10 @@
                     deferred.reject("Database initialization failed with error: " + err);
                     return;
                 }
-                db[collectionName].deleteMany({}, function(err){
+                db[collection.name].deleteMany({}, function(err){
                     if (err) {
-                        console.log("Failed to empty collection " + _prettyCollectionName + ".");
-                        deferred.reject("Failed to empty collection " + _prettyCollectionName + ". Error:" + err);
+                        console.log("Failed to empty collection " + collection.prettName + ".");
+                        deferred.reject("Failed to empty collection " + collection.prettyName + ". Error:" + err);
                     }
                     else deferred.resolve();
                 });

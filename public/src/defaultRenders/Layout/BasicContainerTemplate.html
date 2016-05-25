@@ -1,0 +1,3 @@
+<div ng-repeat="link in model.links | onlyChildrenRelLinks | orderBy: 'sequence'">
+    <h-node href="{{link.href}}"></h-node>
+</div>

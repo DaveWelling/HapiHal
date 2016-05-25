@@ -1,0 +1,5 @@
+<uib-tabset active="active" >
+    <uib-tab heading="{{link.title}}" ng-repeat="link in navPageModels | orderBy: 'sequence'">
+        <h-node preloaded-model="link"></h-node>
+    </uib-tab>
+</uib-tabset>

@@ -1,0 +1,8 @@
+{
+	"mongoConnection": "mongodb://localhost:27017/backbone",
+	"collections" : [
+		{ "name" : "hNode", "prettyName" : "Hierarchical Node", "customRepository": false},
+		{ "name" : "hNodeType", "prettyName" : "Hierarchical Node Type", "customRepository": false},
+		{ "name" : "asset", "prettyName" : "Asset", "customRepository": false}
+	]
+}

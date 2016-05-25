@@ -1,9 +1,15 @@
 
 (function(data){
-    data.hNode = require("./hNodeRepository");
-	data.hNodeType = require("./hNodeTypeRepository");
-	data.viewType = require("./viewTypeRepository");
-	data.viewJs = require("./viewJsRepository");
-	data.viewHtml = require("./viewHtmlRepository");
-	data.userRoot = new(require("./userRootRepository"))();
+	var collections = require("../config").collections;
+	var Base = require("./BaseRepository");
+	
+	// create repositories specified in the config
+	collections.forEach(function(collection){
+		if (!collection.customRepository){
+			data[collection.name] = new Base(collection.name, collection.prettyName);
+		}
+	});
+	
+	// create custom repositories
+	data.userRoot = require("./userRootRepository");
 })(module.exports);

@@ -1,10 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="app">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
-    Hi from static file land
+<body ng-controller="DefaultAppController as vm">
+<section class="container">
+    <div ui-view></div>
+</section>
+<footer class="footer">
+    <p class="pull-right">
+        <img id="loadingSpinner" ng-show="vm.loading" class="loader" src="images/loading.gif"/>
+    </p>
+</footer>
 </body>
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="bower_components/api-check/dist/api-check.min.js"></script>
+<script src="bower_components/angular-formly/dist/formly.min.js"></script>
+<script src="src/app.js"></script>
+<script src="src/common/Objectid.js"></script>
+<script src="src/common/eventSink.js"></script>
+<script src="src/common/configValues.js"></script>
+<script src="src/app/loadingInterceptor.js"></script>
+<script src="src/app/router.js"></script>
+<script src="src/app/DefaultAppController.js"></script>
+<script src="src/app/LoginController.js"></script>
+<script src="src/hNode/hNodeDirective.js"></script>
+<script src="src/hNode/nodeMgmtService.js"></script>
+<script src="src/hNode/nodePersistence.js"></script>
 </html>
